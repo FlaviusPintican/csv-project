@@ -3,4 +3,4 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CsvController;
 
-Route::post('/csv/statistics', [CsvController::class, 'getStatistics'])->name('csv.statistics');
+Route::post('/csv/statistics', [CsvController::class, 'getStatistics']);

@@ -21,7 +21,9 @@ class CsvService
      */
     public function getStatistics(Request $request) : array
     {
-        $csvData = (new Csv())->load($request->file('file')->getRealPath())->getActiveSheet()->toArray();
+        /** @var Csv $csv */
+        $csv = resolve(Csv::class);
+        $csvData = $csv->load($request->file('file')->getRealPath())->getActiveSheet()->toArray();
         $csvData = $this->validateNumberOfRows($csvData);
         $ages = array_map(fn(array $person) => (new Person($person))->getAge(), $csvData);
         $duplicateAges = array_filter(array_count_values($ages), fn(int $frequency) => $frequency > 1);
