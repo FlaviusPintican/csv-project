@@ -22,8 +22,8 @@ class CsvController extends Controller
      *
      * @return array
      */
-    public function getStatistics(Request $request) : array
+    public function generateStatistics(Request $request) : array
     {
-        return $this->csvService->getStatistics($request);
+        return $this->csvService->generateStatistics($request);
     }
 }

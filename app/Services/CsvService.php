@@ -19,7 +19,7 @@ class CsvService
      *
      * @return array
      */
-    public function getStatistics(Request $request) : array
+    public function generateStatistics(Request $request) : array
     {
         /** @var Csv $csv */
         $csv = resolve(Csv::class);
