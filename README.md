@@ -7,6 +7,7 @@
 #### config -> config files of the app
 #### public -> index.php front controller of the app
 #### routes -> public and api routes(need authentication)
+##### POST /csv/statistics is necessary to use for getting csv statistics
 
 #### tests -> perform functional tests for app
 

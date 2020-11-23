@@ -24,14 +24,16 @@ class CsvService
         /** @var Csv $csv */
         $csv = resolve(Csv::class);
         $csvData = $csv->load($request->file('file')->getRealPath())->getActiveSheet()->toArray();
-        $csvData = $this->validateNumberOfRows($csvData);
+        array_shift($csvData);
+        $this->validateNumberOfRows($csvData);
         $ages = array_map(fn(array $person) => (new Person($person))->getAge(), $csvData);
         $duplicateAges = array_filter(array_count_values($ages), fn(int $frequency) => $frequency > 1);
         $statistics = [];
+        $nrAges = count($ages);
 
         foreach ($duplicateAges as $age => $frequency) {
             $statistics['ages'][$age] = [
-                'percentage' => (number_format($frequency / count($ages), 4) * 100) . '%',
+                'percentage' => (number_format($frequency / $nrAges, 4) * 100) . '%',
             ];
         }
 
@@ -41,16 +43,12 @@ class CsvService
     /**
      * @param array $csvData
      *
-     * @return array
+     * @return void
      */
-    private function validateNumberOfRows(array $csvData) : array
+    private function validateNumberOfRows(array $csvData) : void
     {
-        array_shift($csvData);
-
         if (count($csvData) > self::LIMIT_ROWS) {
             throw new BadRequestHttpException(sprintf('Csv file should have maximum %s records', self::LIMIT_ROWS));
         }
-
-        return $csvData;
     }
 }
