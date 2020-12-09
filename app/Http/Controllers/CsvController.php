@@ -12,6 +12,9 @@ class CsvController extends Controller
      */
     private CsvService $csvService;
 
+    /**
+     * @param CsvService $csvService
+     */
     public function __construct(CsvService $csvService)
     {
         $this->csvService = $csvService;
